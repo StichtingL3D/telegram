@@ -13,7 +13,7 @@ $log_mail = '';
 
 /*--- debug settings ---*/
 define('DEBUG', false);
-define('DEBUG_ADDRESS', 'lode@l3d.nl');
+define('DEBUG_ADDRESS', 'telegram@l3d.nl');
 if (DEBUG) {
 	error_reporting(-1);
 	ini_set('display_errors', 1);
@@ -74,7 +74,20 @@ foreach ($telegrams as $gram) {
 if (!DEBUG) ini('last_id', $new_last_id);
 $log_mail .= log_message('DONE');
 
-@phpmailer_send($to=false, $subject='Telegram notify log', $body=$log_mail);
+if (strpos($log_mail, 'FAILED')) {
+	@phpmailer_send($to=false, $subject='Telegram notifier: error!', $body=$log_mail);
+}
+elseif (date('Hi', time()) == '0000') {
+	$full_log = file(PATH.'log');
+	$custom_log = '';
+	foreach ($full_log as $message) {
+		if (strpos($message, 'DONE')) {
+			continue;
+		}
+		$custom_log .= $message.NL;
+	}
+	@phpmailer_send($to=false, $subject='Telegram notifier - daily log', $body=$custom_log);
+}
 
 /*------------------------------------------------------------------------------
 	Functions for usage above.
