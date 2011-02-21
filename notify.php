@@ -77,6 +77,9 @@ $log_mail .= log_message('DONE');
 if (strpos($log_mail, 'FAILED')) {
 	@phpmailer_send($to=false, $subject='Telegram notifier: error!', $body=$log_mail);
 }
+elseif (DEBUG) {
+	@phpmailer_send($to=false, $subject='Telegram notifier - debug log', $body=$log_mail);
+}
 elseif (date('Hi', time()) == '0000') {
 	$full_log = file(PATH.'log');
 	$custom_log = '';
