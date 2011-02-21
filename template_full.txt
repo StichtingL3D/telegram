@@ -1,0 +1,8 @@
+Hallo {TO_NAME}, {FROM_NAME} heeft je een telegram gestuurd in L3Daw:
+
+------------------------------
+{TELEGRAM}
+------------------------------
+
+De piccolo van L3D
+www.l3d.nl
