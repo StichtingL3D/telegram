@@ -83,12 +83,19 @@ elseif (DEBUG) {
 elseif (date('Hi', time()) == '0000') {
 	$full_log = file(PATH.'log');
 	$custom_log = '';
+	$date_last_day = date('D m/d/y', time()-3600);
+	
+	// get all interesting logs of the last day
 	foreach ($full_log as $message) {
-		if (strpos($message, 'DONE')) {
+		$is_last_day = (strpos($message, $date_last_day) === 0) ? true : false;
+		if ($is_last_day == false || strpos($message, 'DONE')) {
 			continue;
 		}
-		$custom_log .= $message.NL;
+		$custom_log .= $message;
 	}
+	// add last heartbeat
+	$custom_log .= end($full_log);
+	
 	@phpmailer_send($to=false, $subject='Telegram notifier - daily log', $body=$custom_log);
 }
 
