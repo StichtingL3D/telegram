@@ -1,5 +1,5 @@
 <?php
-$mbox = imap_open("{imap.googlemail.com:465/ssl}", "telegram", base64_decode('dEhlJjNQaGFjcjhmJmczZg=='));
+$mbox = imap_open("{imap.googlemail.com:465/ssl}", "telegram", base64_decode('...'));
 
 echo "<h1>Mailboxes</h1>\n";
 $folders = imap_listmailbox($mbox, "{smtp.googlemail.com:465/ssl}", "*");
